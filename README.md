@@ -1,2 +1,5 @@
 # hcor
-hcor function.
+hcor functions
+
+To use:
+
