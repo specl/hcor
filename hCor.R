@@ -16,8 +16,8 @@ hcorRun=function(dat,prior,chains=4,iter=1000,burnin=100){
   return(out)
 }
 
-hcorDiagnostic=function(struc){
-  mcmc_fit <- as.mcmc(struc)
+hcorDiagnostic=function(chains){
+  mcmc_fit <- as.mcmc(chains)
   mcmc_sel <- mcmc_fit[, c("rho", "sigma[1]", "sigma[2]", "pTau[1]", "pTau[2]"), drop = FALSE]
   return(gelman.diag(mcmc_sel, multivariate = TRUE))
 }
@@ -42,9 +42,9 @@ hcorConv=function(dat){
   return(conventional)
 }
 
-hcorPlot=function(mcmc,dat){
+hcorPlot=function(chains,dat){
   conv=hcorConv(dat)
-  pars=mcmc$BUGSoutput$sims.list
+  pars=chains$BUGSoutput$sims.list
   h=hist(pars$rho,breaks=seq(-1,1,.05),plot=F)
   top=max(h$density)
   hist(pars$rho,breaks=seq(-1,1,.05),prob=T,xlim=c(-1,1),ylim=c(0,top*1.1),   
@@ -59,10 +59,10 @@ hcorPlot=function(mcmc,dat){
   points(mean(pars$rho),top*.5,pch=19,cex=1.3,col='darkblue')
 }
 
-hcorRho=function(mcmc) mcmc$BUGSoutput$sims.list$rho
+hcorRho=function(chains) chains$BUGSoutput$sims.list$rho
 
-hcorBF=function(mcmc,interval){
-  rho=hcorRho(mcmc)
+hcorBF=function(chains,interval){
+  rho=hcorRho(chains)
   prior=.5*diff(interval)
   count=sum(interval[1]<rho & rho <=interval[2])
   post=(count+1)/(length(rho)+2)
