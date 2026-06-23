@@ -21,7 +21,7 @@ It supports two designs:
 ## Prerequisites
 
 Before running hCor, you must have JAGS (Just Another Gibbs Sampler) installed on your machine.
-Download JAGS here: https://mcmc-jags.sourceforge.io/
+Download JAGS here: https://cran.r-project.org
 
 Then, install the required R packages in your R console:
 ```R
